@@ -3,26 +3,37 @@ import sys
 import json
 import re
 import subprocess
+import Dweller
 
-path = "C:\\Users\\Greenlamp\\Documents\\Python\\GenTreeFS\\Vault3.sav"
+path = "C:\\Users\\Greenlamp\\Documents\\GitHub\\GenTreeFS\\Vault3.sav"
     
 def main(text):
     if(isBase64String(text)):
         exe(text)
+        
+    data = loadData(text)
+    dwellers = initDwellers(data)
+    
+def loadData(text):
     file = open(path, "r")
     data = json.load(file)
-    dwellers = data["dwellers"]["dwellers"]
-    dwellers_count = len(dwellers)
-    print(str(dwellers_count) + " dwellers found.")
-    for idx, dweller in enumerate(dwellers):
-        print("---------------")
-        print(dweller["name"] + " " + dweller["lastName"])
-        print("---------------")
-        print("Babies:")
-        print(dweller["relations"]["ascendants"])
-        print("---------------")
-        print()
+    return data
     
+    
+def initDwellers(data):
+    dwellers = Dweller.Dwellers()
+    dataDwellers = data["dwellers"]["dwellers"]
+    
+    for idx, dweller in enumerate(dataDwellers):
+        newDweller = Dweller.Dweller()
+        newDweller.id = dweller["serializeId"]
+        newDweller.name = dweller["name"]
+        dwellers.add(newDweller)
+    
+
+    dwellers.showAll()
+    
+    return dwellers
     
 def isBase64String(text):
     text = text.strip()
@@ -33,7 +44,7 @@ def isBase64String(text):
     return (length % 4 == 0) and (result)
     
 def exe(encryptedText):
-    subprocess.call(['C:\\Users\\Greenlamp\\Documents\\Python\\GenTreeFS\\FOSDecrypt.exe', 'C:\\Users\\Greenlamp\\Documents\\Python\\GenTreeFS\\Vault3.sav'])
+    subprocess.call(['C:\\Users\\Greenlamp\\Documents\\GitHub\\GenTreeFS\\FOSDecrypt.exe', 'C:\\Users\\Greenlamp\\Documents\\GitHub\\GenTreeFS\\Vault3.sav'])
 
             
 
