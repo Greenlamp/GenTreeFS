@@ -1,9 +1,8 @@
-import os
-import sys
 import json
 import re
 import subprocess
-import Dweller
+
+from Entities import Dweller
 
 path = "C:\\Users\\Greenlamp\\Documents\\GitHub\\GenTreeFS\\Vault3.sav"
     
