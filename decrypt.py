@@ -41,6 +41,33 @@ class utils(object):
         padding_count = (16 - len(s) % 16)
         return s + (padding_count * chr(padding_count))
 
+if __name__ == "__main__":
+    try:
+        args = [sys.argv[x] for x in range(1, len(sys.argv))]  #remove first arg
+        if len(args) == 3:
+            mode = args[0].lower()
+            input_file = args[1]
+            output_file = args[2]
+            if mode == "decrypt" or mode == "encrypt":
+                if mode == "decrypt":
+                    print("Decrypting \"{}\" to \"{}\"...".format(input_file, output_file))
+                    decrypt_save_file(input_file, output_file)
+                    print("Done!")
+                elif mode == "encrypt":
+                    print("Encrypting \"{}\" to \"{}\"...".format(input_file, output_file))
+                    encrypt_save_file(input_file, output_file)
+                    print("Done!")
+            else:
+                print("Invalid mode specified.")
+                print("Mode should be either encrypt or decrypt.")
+        else:
+            print("Not enough arguments (" + str(len(args)) + " given out of 3)")
+            print("USAGE: (encrypt/decrypt) (input file) (output file)")
+    except Exception as err:
+        print(err.args)
+
+    print("Press ENTER to exit...")
+    input()  #wait on enter
 
 '''
 #example for modding lunchboxes
