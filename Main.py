@@ -11,7 +11,7 @@ def main():
     nameFileSave, nameFileJson, folderSave, folderJson, root = getFolder(openFile(path))
 
     if(isBase64String(openFile(path).read())):
-        decrypt_save_file(folderSave + nameFileSave, folderJson + nameFileJson)
+        decrypt_save_file(folderSave + nameFileSave, folderJson + nameFileJson, False)
         
     data = loadData(folderJson + nameFileJson)
     dwellers = initDwellers(data)
