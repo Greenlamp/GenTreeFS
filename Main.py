@@ -1,11 +1,10 @@
 import json
 import re
 import subprocess
-
-from Entities import Dweller
+from Entities.Dwellers import Dwellers
 
 path = "C:\\Users\\Greenlamp\\Documents\\GitHub\\GenTreeFS\\Vault3.sav"
-    
+
 def main(text):
     if(isBase64String(text)):
         exe(text)
@@ -20,18 +19,11 @@ def loadData(text):
     
     
 def initDwellers(data):
-    dwellers = Dweller.Dwellers()
+    dwellers = Dwellers()
     dataDwellers = data["dwellers"]["dwellers"]
-    
-    for idx, dweller in enumerate(dataDwellers):
-        newDweller = Dweller.Dweller()
-        newDweller.id = dweller["serializeId"]
-        newDweller.name = dweller["name"]
-        dwellers.add(newDweller)
-    
-
+    dwellers.initData(dataDwellers)
     dwellers.showAll()
-    
+    dwellers.showAllFamilies()
     return dwellers
     
 def isBase64String(text):
