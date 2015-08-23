@@ -50,11 +50,6 @@ def isBase64String(text):
     result = re.match(pattern, text)
     
     return (length % 4 == 0) and (result)
-    
-def exe(encryptedText):
-    subprocess.call(['FOSDecrypt.exe', path])
-
-            
 
 if __name__ == "__main__":
     root = tk.Tk()
