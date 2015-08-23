@@ -14,9 +14,9 @@ def encrypt_save_file(in_json_file, out_save_file):
         file_contents = open(in_json_file, "r").read()
         
         encrypted = base64.b64encode(cipher.encrypt(utils.pkcs7_pad_str(file_contents)))
-        open(out_save_file, "w").write(encrypted)
+        open(out_save_file, "wb").write(encrypted)
     else:
-        raise Exception("Input file \"{}\" doesn't exist!".format(input_file))
+        raise Exception("Input file \"{}\" doesn't exist!".format(in_json_file))
 
 def decrypt_save_file(in_save_file, out_json_file, pretty_json = True):
     if os.path.isfile(in_save_file):
@@ -33,7 +33,7 @@ def decrypt_save_file(in_save_file, out_json_file, pretty_json = True):
         
         open(out_json_file, "w").write(decrypted)
     else:
-        raise Exception("Input file \"{}\" doesn't exist!".format(input_file))
+        raise Exception("Input file \"{}\" doesn't exist!".format(in_save_file))
 
 class utils(object):
     @staticmethod
@@ -41,32 +41,6 @@ class utils(object):
         padding_count = (16 - len(s) % 16)
         return s + (padding_count * chr(padding_count))
 
-try:
-    args = [sys.argv[x] for x in range(1, len(sys.argv))]  #remove first arg
-    if len(args) == 3:
-        mode = args[0].lower()
-        input_file = args[1]
-        output_file = args[2]
-        if mode == "decrypt" or mode == "encrypt":
-            if mode == "decrypt":
-                print("Decrypting \"{}\" to \"{}\"...".format(input_file, output_file))
-                decrypt_save_file(input_file, output_file)
-                print("Done!")
-            elif mode == "encrypt":
-                print("Encrypting \"{}\" to \"{}\"...".format(input_file, output_file))
-                encrypt_save_file(input_file, output_file)
-                print("Done!")
-        else:
-            print("Invalid mode specified.")
-            print("Mode should be either encrypt or decrypt.")
-    else:
-        print("Not enough arguments (" + str(len(args)) + " given out of 3)")
-        print("USAGE: (encrypt/decrypt) (input file) (output file)")
-except Exception as err:
-    print(err.args)
-
-print("Press ENTER to exit...")
-input()  #wait on enter
 
 '''
 #example for modding lunchboxes

@@ -4,6 +4,9 @@ class Family:
         self.members.append(dweller)
 
     def addDweller(self, dweller):
+        for idx, member in enumerate(self.members):
+            if member.id == dweller.id:
+                return
         self.members.append(dweller)
 
     def containDweller(self, dweller):
