@@ -4,6 +4,7 @@ import subprocess
 import tkinter as tk
 from tkinter import filedialog
 from Entities.Dwellers import Dwellers
+from Entities.Dweller import Dweller
 from decrypt import decrypt_save_file, encrypt_save_file
 
 
@@ -14,8 +15,12 @@ def main():
         decrypt_save_file(folderSave + nameFileSave, folderJson + nameFileJson, False)
         
     data = loadData(folderJson + nameFileJson)
-    dwellers = initDwellers(data)
-    encrypt_save_file(folderJson + nameFileJson, folderSave + nameFileSave)
+    dweller = Dweller(data)
+    reprod = dweller.getReproductible(1)
+    for id in reprod:
+        print(dweller.getName(id))
+    #dwellers = initDwellers(data)
+    #encrypt_save_file(folderJson + nameFileJson, folderSave + nameFileSave)
 
 def getFolder(file):
     nameFileSave = file.name.split("/")[-1]
@@ -37,6 +42,7 @@ def openFile(path):
     
 def initDwellers(data):
     dwellers = Dwellers()
+
     dataDwellers = data["dwellers"]["dwellers"]
     dwellers.initData(dataDwellers)
     dwellers.showAll()
